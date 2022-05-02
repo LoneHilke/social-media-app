@@ -128,6 +128,6 @@ class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         pk = self.kwargs['pk']
         return reverse_lazy('profile', kwargs={'pk': pk})
 
-    def test_funk(self):
+    def test_func(self):
         profile = self.get_object()
         return self.request.user == profile.user
