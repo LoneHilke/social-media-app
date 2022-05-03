@@ -1,5 +1,6 @@
-from heapq import _heapify_max
+#from heapq import _heapify_max
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from django.urls import reverse_lazy 
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
@@ -222,3 +223,16 @@ class Dislike(LoginRequiredMixin, View):
 
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
+
+class UserSearch(View):
+    def get(self, request, *args, **kwargs):
+        query = self.request.GET.get('query')
+        profile_list = UserProfile.objects.filter(
+            Q(user__username__icontains=query)
+        )
+
+        context = {
+            'profile_list': profile_list,
+        }
+
+        return render(request, 'social/search.html', context)
