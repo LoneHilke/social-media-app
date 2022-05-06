@@ -109,7 +109,7 @@ transition: 0.3s;
     background-color: #f3f3f3;
     border-radius: 30px;
     padding: 10px 25px;
-    width: 25s;
+    width: 25%;
 }
 
 .received-message {
@@ -117,6 +117,20 @@ transition: 0.3s;
     color: #fff;
     border-radius: 30px;
     padding: 10px 25px;
-    width: 25s;
-    float: right;
+    width: 35s;
+}
+
+.message-receiver-container {
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.message-image {
+    border-radius: 10px;
+    max-width: 35%;
+    height: auto;
+}
+
+.inbox-icon {
+    margin-right: 5px;
 }
