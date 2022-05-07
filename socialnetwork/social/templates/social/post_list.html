@@ -30,6 +30,7 @@
                 </a>
                 <p class="post-text">
                     <a class="text-primary post-link" href="{% url 'profile' post.author.profile.pk %}">@{{ post.author }}</a> {{ post.created_on }}
+                    <span onclik="shareToggle('{{ post.pk }}')"><i class="far fa-share-square share-btn"></i></span>
                 </p>
             </div>
               
@@ -43,6 +44,13 @@
                         {% endfor %}
                     </div>
                 {% endif %} 
+                <form method="POST" action="{% url 'share-post' post.pk %}" class="d-none" id="{{ post.pk }}">
+                    {% csrf_token %}
+                    {{ shareform | crispy }}
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-success mt-3">Share the post</button>
+                    </div>
+                </form>
                 <p>{{ post.body }}</p> 
                 <a href="{% url 'post-detail' post.pk %}" class="stretched-link"></a>   
             </div> 

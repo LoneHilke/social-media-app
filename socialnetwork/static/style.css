@@ -117,7 +117,8 @@ transition: 0.3s;
     color: #fff;
     border-radius: 30px;
     padding: 10px 25px;
-    width: 35s;
+    width: 35%;
+    float: right;
 }
 
 .message-receiver-container {
@@ -132,5 +133,5 @@ transition: 0.3s;
 }
 
 .inbox-icon {
-    margin-right: 5px;
+    margin-right: 10px;
 }

@@ -2,6 +2,7 @@
 from django.dispatch import receiver
 from django.shortcuts import render, redirect
 from django.db.models import Q
+from django.utils import timezone
 from django.urls import reverse_lazy 
 from django.contrib import messages
 from django.contrib.auth.models import User 
@@ -9,7 +10,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.views import View
 from .models import Post, Comment, ThreadModel, UserProfile, Notification, MessageModel, Image
-from .forms import MessageForm, PostForm, CommentForm, ThreadForm
+from .forms import MessageForm, PostForm, CommentForm, ThreadForm, ShareForm
 from django.views.generic.edit import UpdateView, DeleteView
 
 
@@ -21,9 +22,11 @@ class PostListView(LoginRequiredMixin, View):
             author__profile__followers__in=[logged_in_user.id]
         ).order_by('-created_on')
         form = PostForm()
+        share_form = ShareForm()
 
         context = {
             'post_list': posts,
+            'shareform': share_form,
             'form': form,
         }
 
@@ -36,6 +39,7 @@ class PostListView(LoginRequiredMixin, View):
         ).order_by('-created_on')
         form = PostForm(request.POST, request.FILES)
         files = request.FILES.getlist('image')
+        share_form = ShareForm()
 
         if form.is_valid():
             new_post = form.save(commit=False)
@@ -51,6 +55,7 @@ class PostListView(LoginRequiredMixin, View):
 
         context = {
             'post_list': posts,
+            'shareform':share_form,
             'form': form,
         }
 
@@ -322,6 +327,28 @@ class CommentDislike(LoginRequiredMixin, View):
 
         next = request.POST.get('next', '/')
         return HttpResponseRedirect(next)
+
+class SharePostView(View):
+    def post(self, request, pk, *args, **kwargs):
+        original_post = Post.objects.get(pk=pk)
+        form = ShareForm(request.POST)
+
+        if form.is_valid():
+            new_post = Post(
+                shared_body=self.request.POST.get('body'),
+                body= original_post.body,
+                author=original_post.author,
+                created_on=original_post.created_on,
+                shared_user=request.user,
+                shared_on=timezone.now(),
+            )
+
+            new_post.save()
+
+            for img in original_post.image.all():
+                new_post.image.add(img)
+            new_post.save()
+        return redirect('post-list')
 
 class UserSearch(View):
     def get(self, request, *args, **kwargs):
