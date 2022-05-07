@@ -135,3 +135,7 @@ transition: 0.3s;
 .inbox-icon {
     margin-right: 10px;
 }
+
+.share-btn {
+    margin-left: 30px;
+}

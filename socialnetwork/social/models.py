@@ -57,7 +57,7 @@ def save_user_profile(sender, instance, **kwargs):
 	instance.profile.save()
 
 class Notification(models.Model):
-    # 1 = Like 2 = Comment 3 = Follow 4 = dm
+    # 1 = Like 2 = Comment 3 = Follow #4 = DM
     notification_type = models.IntegerField()
     to_user = models.ForeignKey(User, related_name='notification_to', on_delete=models.CASCADE, null=True)
     from_user = models.ForeignKey(User, related_name='notification_from', on_delete=models.CASCADE, null=True)

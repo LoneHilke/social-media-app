@@ -2,9 +2,9 @@ function commentReplyToggle(parent_id) {
    const row = document.getElementById(parent_id);
 
    if (row.classList.contains('d-none')) {
-       row.classList.remove('d-none');
+            row.classList.remove('d-none');
    } else {
-       row.classList.add('d-none');
+            row.classList.add('d-none');
    }
 }
 
@@ -12,9 +12,9 @@ function shareToggle(parent_id) {
     const row = document.getElementById(parent_id);
  
     if (row.classList.contains('d-none')) {
-        row.classList.remove('d-none');
+            row.classList.remove('d-none');
     } else {
-        row.classList.add('d-none');
+            row.classList.add('d-none');
     }
  }
 
@@ -22,9 +22,9 @@ function showNotifications() {
     const container = document.getElementById('notification-container');
 
     if (container.classList.contains('d-none')) {
-        container.classList.remove('d-none');
+            container.classList.remove('d-none');
     } else {
-        container.classList.add(d-none);
+            container.classList.add(d-none);
     }
 }
 
@@ -44,9 +44,9 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function removeNotificattion(removeNotificattionURL, redirectURL) {
+function removeNotificattion(removeNotificationURL, redirectURL) {
     const csrftoken = getCookie('csrftoken');
-    let xmlhhtp = new XMLHttpRequest();
+    let xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == XMLHttpRequest.DONE) {
