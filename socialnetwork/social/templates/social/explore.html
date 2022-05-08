@@ -2,26 +2,31 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+
 <div class="container">
-    <div class="row justify-content-center mt-3">
-        <div class="col-md-5 col-sm-12 border-bottom">
-            <h5>Add a Post!</h5>
+    <div class="row mt-5">
+        <div class="col-md-5 col-sm-6">
+            <a href="{% url 'post-list' %}" class="btn btn-light">Back to feed</a>
         </div>
     </div>
 
-    <div class="row justify-content-center mt-3 mb-5">
-        <div class="col-md-5 col-sm-12 border-bottom">
-            <form method="POST" enctype="multipart/form-data">
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-5 col-sm-12">
+            {% if tag %}
+                <h3>Explore #{{ tag.name }} Posts</h3>
+                <p class="mb-3">Most recent posts tagged with {{ tag.name }}</p>
+            {% else %}
+                <h3>Explore Posts</h3>
+                <p class="mb-3">Explore tags to find new posts</p>
+            {% endif %}
+
+            <form method="POST" class="mb-5">
                 {% csrf_token %}
-                {{ form | crispy }}
-                <div class="d-grid gap-2">
-                    <button class="btn btn-success mt-3">Submit!</button>
-                </div>
+                {{ explore_form | crispy }}
             </form>
         </div>
     </div>
-
-    {% for post in post_list %}
+    {% for post in posts %}
     <div class="row justify-content-center mt-3">
         <div class="col-md-5 col-sm-12 border-bottom position-relative">
             {% if post.shared_user %}
@@ -98,6 +103,7 @@
                 </form>
             </div>
         </div>
+    </div>
     {% endfor %}
 </div>
 {% endblock content %}
